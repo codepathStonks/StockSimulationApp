@@ -102,6 +102,38 @@
             </objects>
             <point key="canvasLocation" x="864" y="984"/>
         </scene>
+        <!--Search View Controller-->
+        <scene sceneID="m7m-q2-Ysg">
+            <objects>
+                <viewController id="vIj-9z-sOA" customClass="SearchViewController" customModule="stockSimulation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ukc-TM-i7V">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="bGO-EH-nll"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XoF-Av-RZy"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eow-Iq-JRK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1826" y="984"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="Iib-Fn-eia">
+            <objects>
+                <viewController id="a6D-gt-mQA" customClass="ProfileViewController" customModule="stockSimulation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GRt-A4-BdG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="paW-TD-KuB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Sjs-zk-W4z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5fh-rG-vDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2780" y="984"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jYi-7D-8jp">
             <objects>
@@ -113,11 +145,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="BoP-md-TIv" kind="relationship" relationship="viewControllers" id="9va-cx-Cr0"/>
+                        <segue destination="0Xb-ED-uTQ" kind="relationship" relationship="viewControllers" id="0Gi-uN-qzV"/>
+                        <segue destination="dko-5J-zc6" kind="relationship" relationship="viewControllers" id="iED-hO-gcU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pZT-Tg-K4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1675" y="-772"/>
+            <point key="canvasLocation" x="1825" y="-772"/>
         </scene>
         <!--Item-->
         <scene sceneID="hwx-dX-k7w">
@@ -137,6 +171,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="My8-Bb-8K4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="863.768115942029" y="116.51785714285714"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="a0S-NY-XiC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Xb-ED-uTQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="l8R-0q-NHw"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kKz-Hr-Zdf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vIj-9z-sOA" kind="relationship" relationship="rootViewController" id="NIa-yX-S9j"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p6R-G4-vbh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1826" y="117"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="F7X-hb-f3w">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dko-5J-zc6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="GPa-Ve-Y4I"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="B7B-gC-4o5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="a6D-gt-mQA" kind="relationship" relationship="rootViewController" id="n0f-eN-XXs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ibg-v0-TRP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2780" y="117"/>
         </scene>
     </scenes>
     <resources>
