@@ -104,10 +104,52 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### User
+
+   | Property | Type | Description |
+   | -------- | ---- | ----------- |
+   | objectId | String | unique id for the user post (default field) |
+   | username | String | login name |
+   | password | String | Login crediential |
+   | balance  | Double    | current balance of fake currency |
+   | profile_image | File | image tied to user's account |
+   | portfolio | Pointer to Portfolio | portfolio of the user |
+   |following  | array | array of pointers to users |
+   
+#### Portfolio
+   | Property | Type | Description |
+   | -------- | ---- | ----------- |
+   | user     | Pointer to User | owner of the portfolio|
+   | ticker   | String | name of the stock |
+   | quantity | Int | how many of this stock is bought |
+   | date_bought_at | Date | when stock was purchased |
+   | price_bought_at | Double | stock's purchase price |
+   
+   
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+#### List of network requests by screen
+   - Home Screen/Portfolio Overview
+       - (Read/GET) Query all tickers in portfolio
+         ```swift
+         let query = PFQuery(className:"Portfolio")
+         query.whereKey("user", equalTo: currentUser)
+         query.findObjectsInBackground { (tickers: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let tickers = tickers {
+               print("Successfully retrieved \(tickers.count) tickers.")
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+       - (Read/GET) Query balance of user
+       - (Read/GET) Query current prices of stocks
+   - Stock Detail
+      - (Create/POST) Add ticker and date to portfolio when bought
+      - (Update/PUT) Increase or decrease quantity of stock
+      - (Delete) Delete ticker from portfolio when all is sold
+      - (Read/GET) Query information about stock including prices, quantity, changes, etc
+   - Profile Screen
+      - (Read/GET) Query logged in user object
+      - (Read/GET) Query username and balance of user
