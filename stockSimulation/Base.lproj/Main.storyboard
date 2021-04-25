@@ -217,13 +217,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiR-fR-1Qz">
-                                <rect key="frame" x="20" y="271" width="140" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$90042572.45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-Rz-BP9">
                                 <rect key="frame" x="102" y="124" width="273" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -244,23 +237,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="***********" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wqo-dr-E4a">
-                                <rect key="frame" x="175" y="271" width="219" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.88317681347150256" green="0.88317681347150256" blue="0.88317681347150256" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="12"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="wallet" translatesAutoresizingMaskIntoConstraints="NO" id="Ub7-j6-OE6">
                                 <rect key="frame" x="20" y="114" width="74" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfJ-Fc-83B">
+                                <rect key="frame" x="105" y="278" width="205" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Password Reset"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="paW-TD-KuB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -268,9 +254,7 @@
                     <navigationItem key="navigationItem" id="Sjs-zk-W4z"/>
                     <connections>
                         <outlet property="BalanceLabel" destination="qNS-Rz-BP9" id="iXK-LY-R8N"/>
-                        <outlet property="LabelPasswordLabel" destination="fiR-fR-1Qz" id="Eh6-Gx-KQ2"/>
                         <outlet property="LabelUsernameLabel" destination="Ui2-Em-6LO" id="aYK-fQ-x5f"/>
-                        <outlet property="PasswordLabel" destination="Wqo-dr-E4a" id="m0G-fr-wof"/>
                         <outlet property="UsernameLabel" destination="AOH-gN-sIh" id="TIc-kt-key"/>
                         <outlet property="WalletImage" destination="Ub7-j6-OE6" id="3A8-Yi-B29"/>
                     </connections>
@@ -298,11 +282,11 @@
             </objects>
             <point key="canvasLocation" x="1825" y="-772"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="hwx-dX-k7w">
             <objects>
                 <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="BoP-md-TIv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ohk-Kk-VFB"/>
+                    <tabBarItem key="tabBarItem" title="" image="home_icon" id="ohk-Kk-VFB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wix-sq-tYw">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -317,11 +301,11 @@
             </objects>
             <point key="canvasLocation" x="863.768115942029" y="116.51785714285714"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="a0S-NY-XiC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Xb-ED-uTQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="l8R-0q-NHw"/>
+                    <tabBarItem key="tabBarItem" title="" image="search_icon" id="l8R-0q-NHw"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kKz-Hr-Zdf">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -336,11 +320,11 @@
             </objects>
             <point key="canvasLocation" x="1826" y="117"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="F7X-hb-f3w">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dko-5J-zc6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="GPa-Ve-Y4I"/>
+                    <tabBarItem key="tabBarItem" title="" image="user_icon" id="GPa-Ve-Y4I"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B7B-gC-4o5">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -357,6 +341,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="home_icon" width="30" height="30"/>
+        <image name="search_icon" width="30" height="30"/>
+        <image name="user_icon" width="30" height="30"/>
         <image name="wallet" width="225" height="225"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

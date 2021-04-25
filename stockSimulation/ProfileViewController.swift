@@ -6,18 +6,19 @@
 //
 
 import UIKit
+import Parse
 
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var LabelUsernameLabel: UILabel!
-    @IBOutlet weak var LabelPasswordLabel: UILabel!
     @IBOutlet weak var BalanceLabel: UILabel!
     @IBOutlet weak var UsernameLabel: UILabel!
-    @IBOutlet weak var PasswordLabel: UILabel!
     @IBOutlet weak var WalletImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        UsernameLabel.text = PFUser.current()?.username
+        
         // Do any additional setup after loading the view.
     }
     
