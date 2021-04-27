@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
             if(user != nil) {
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             } else {
-                print("Error: \(error?.localizedDescription)")
+                print("Error: \(String(describing: error?.localizedDescription))")
             }
         }
         
@@ -43,9 +43,26 @@ class LoginViewController: UIViewController {
         
         user.signUpInBackground { (success, error) in
             if(success) {
+                
+                //set initial balance to 1000
+                let curr_user = PFUser.current()
+                let start: Double
+                start = 1000.0
+                let a = PFObject(className: "users")
+                a["balance"] = start
+                a["user"] = curr_user
+                a.saveInBackground { (success, error) in
+                    if success { print("balance saved")
+                    }
+                    else {
+                        print("balance not saved")
+                    }
+                }
+                
+                //move to home screen
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             } else {
-                print("Error: \(error?.localizedDescription)")
+                print("Error: \(String(describing: error?.localizedDescription))")
             }
         }
     }

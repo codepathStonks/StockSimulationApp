@@ -6,18 +6,42 @@
 //
 
 import UIKit
+import Parse
 
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var LabelUsernameLabel: UILabel!
-    @IBOutlet weak var LabelPasswordLabel: UILabel!
     @IBOutlet weak var BalanceLabel: UILabel!
     @IBOutlet weak var UsernameLabel: UILabel!
-    @IBOutlet weak var PasswordLabel: UILabel!
     @IBOutlet weak var WalletImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        UsernameLabel.text = PFUser.current()?.username
+        
+        var us3r: PFObject!
+        var balance = 0.0
+        let curr_user = PFUser.current()
+        let q = PFQuery(className: "users")
+        q.whereKey("user", equalTo: curr_user!)
+//        q.findObjectsInBackground { (obj, error) in
+//            if error == nil {
+//                self.balance = obj![0]["balance"] as! Double
+//                print("success")
+//            }
+//            else {
+//                print("error")
+//            }
+//        }
+        if let object = try? q.getFirstObject()
+        {
+            us3r = object
+            print("success")
+            balance = us3r["balance"] as! Double
+        }
+        BalanceLabel.text = "$"
+        BalanceLabel.text?.append(String(balance)) 
+        
         // Do any additional setup after loading the view.
     }
     
