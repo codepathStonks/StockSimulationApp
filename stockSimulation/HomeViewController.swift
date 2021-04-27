@@ -17,11 +17,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var home_tableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         home_tableView.dataSource = self
         home_tableView.delegate = self
+        
+        var us3r: PFObject!
+        var balance = 0.0
+        let curr_user = PFUser.current()
+        let q = PFQuery(className: "users")
+        q.whereKey("user", equalTo: curr_user!)
+//        q.findObjectsInBackground { (obj, error) in
+//            if error == nil {
+//                self.balance = obj![0]["balance"] as! Double
+//                print("success")
+//            }
+//            else {
+//                print("error")
+//            }
+//        }
+        if let object = try? q.getFirstObject()
+        {
+            us3r = object
+            print("balance retrieved")
+            balance = us3r["balance"] as! Double
+        }
+        HomeBalanceLabel.text = "$"
+        HomeBalanceLabel.text?.append(String(balance))
         
         // Do any additional setup after loading the view.
     }
