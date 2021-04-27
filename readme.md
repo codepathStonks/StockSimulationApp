@@ -24,13 +24,13 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 
 **Required Must-have Stories**
 
-* User can login
-* User can register for new account
+* [x] User can login
+* [x] User can register for new account
 * User can view portfolio overview
 * User can search
 * User can view stock details
 * User can view stock's performance over time 
-* User can view profile/settings
+* [x] User can view profile/settings
 * User can use fake currency for buying/selling stocks
 
 **Optional Nice-to-have Stories**
@@ -150,3 +150,10 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Read/GET) Query username and balance of user
+
+
+## Demos
+
+Week 1:
+
+![](week1_demo.gif)
