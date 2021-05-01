@@ -19,6 +19,8 @@
 		15BCD40B2627479A001F7DF3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BCD40A2627479A001F7DF3 /* SearchViewController.swift */; };
 		15BCD410262747B8001F7DF3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BCD40F262747B8001F7DF3 /* ProfileViewController.swift */; };
 		26A6AE2B1B540DCCAD0ED2BB /* Pods_stockSimulation_stockSimulationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA45220B64BCBA955CF25B87 /* Pods_stockSimulation_stockSimulationUITests.framework */; };
+		308161B3263D979D006ED439 /* StockDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308161B2263D979D006ED439 /* StockDetailsViewController.swift */; };
+		308161BB263D9B9E006ED439 /* BuyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308161BA263D9B9E006ED439 /* BuyingViewController.swift */; };
 		49D5EDBC26336A1E00E2CAAF /* homeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5EDBB26336A1E00E2CAAF /* homeCell.swift */; };
 		6D6E38CAECE766DF5FD41186 /* Pods_stockSimulation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B76686084031E51F5637F8 /* Pods_stockSimulation.framework */; };
 		D9921D8DBB66F0E4FB011C66 /* Pods_stockSimulationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 967A0CF2A51EF75C5D1704A1 /* Pods_stockSimulationTests.framework */; };
@@ -60,6 +62,8 @@
 		15BCD40A2627479A001F7DF3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		15BCD40F262747B8001F7DF3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		25B76686084031E51F5637F8 /* Pods_stockSimulation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stockSimulation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		308161B2263D979D006ED439 /* StockDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewController.swift; sourceTree = "<group>"; };
+		308161BA263D9B9E006ED439 /* BuyingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyingViewController.swift; sourceTree = "<group>"; };
 		49D5EDBB26336A1E00E2CAAF /* homeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeCell.swift; sourceTree = "<group>"; };
 		5D05DECA742BC985F5732223 /* Pods-stockSimulationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stockSimulationTests.release.xcconfig"; path = "Target Support Files/Pods-stockSimulationTests/Pods-stockSimulationTests.release.xcconfig"; sourceTree = "<group>"; };
 		72AB962327CD17599DA9A0F0 /* Pods-stockSimulation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stockSimulation.release.xcconfig"; path = "Target Support Files/Pods-stockSimulation/Pods-stockSimulation.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 				15BCD40526268FD3001F7DF3 /* HomeViewController.swift */,
 				15BCD40A2627479A001F7DF3 /* SearchViewController.swift */,
 				15BCD40F262747B8001F7DF3 /* ProfileViewController.swift */,
+				308161B2263D979D006ED439 /* StockDetailsViewController.swift */,
+				308161BA263D9B9E006ED439 /* BuyingViewController.swift */,
 				49D5EDBB26336A1E00E2CAAF /* homeCell.swift */,
 			);
 			path = stockSimulation;
@@ -418,11 +424,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				308161B3263D979D006ED439 /* StockDetailsViewController.swift in Sources */,
 				15BCD410262747B8001F7DF3 /* ProfileViewController.swift in Sources */,
 				15BCD40B2627479A001F7DF3 /* SearchViewController.swift in Sources */,
 				49D5EDBC26336A1E00E2CAAF /* homeCell.swift in Sources */,
 				15BCD3F926268FB1001F7DF3 /* LoginViewController.swift in Sources */,
 				15896D8D26268814004D89A3 /* AppDelegate.swift in Sources */,
+				308161BB263D9B9E006ED439 /* BuyingViewController.swift in Sources */,
 				15896D8F26268814004D89A3 /* SceneDelegate.swift in Sources */,
 				15BCD40626268FD3001F7DF3 /* HomeViewController.swift in Sources */,
 			);
