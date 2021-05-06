@@ -25,6 +25,22 @@ class LoginViewController: UIViewController {
         let username = usernameField.text!
         let password = passwordField.text!
         
+        let portfolio = PFObject(className: "Portfolios") //move to buying and selling
+        portfolio["user"] = "user" //PFUser.current()!
+        portfolio["ticker"] = "ticker"
+        portfolio["quantity"] = 0
+        portfolio["date_bought_at"] = Date()
+        portfolio["price_bought_at"] = 0.00
+        
+        portfolio.saveInBackground { (success, error) in
+            if success {
+                print("saved tester portfolio")
+            }
+            else {
+                print ("error tester portfolio")
+            }
+        }
+        
         PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
             if(user != nil) {
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
@@ -32,7 +48,6 @@ class LoginViewController: UIViewController {
                 print("Error: \(String(describing: error?.localizedDescription))")
             }
         }
-        
     }
     
     @IBAction func onSignUp(_ sender: Any) {
@@ -40,6 +55,8 @@ class LoginViewController: UIViewController {
         let user = PFUser()
         user.username = usernameField.text
         user.password = passwordField.text
+       
+        
         
         user.signUpInBackground { (success, error) in
             if(success) {
@@ -58,6 +75,7 @@ class LoginViewController: UIViewController {
                         print("balance not saved")
                     }
                 }
+ 
                 
                 //move to home screen
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
