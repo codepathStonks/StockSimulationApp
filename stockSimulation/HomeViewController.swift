@@ -48,7 +48,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         HomeBalanceLabel.text = "$"
         HomeBalanceLabel.text?.append(String(balance))
         
-        
         group.enter()
         var symbolText = ""
         var tickers = [""]
@@ -57,41 +56,51 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         q2.whereKey("user", equalTo: curr_user!)
         if let portfolio = try? q2.findObjects()
         {
-            for a in 0...portfolio.count - 1 {
-                let obj = portfolio[a]
-                symbolText = obj["ticker"] as! String
-                tickers.append(symbolText)
+            count = portfolio.count
+            if portfolio.count == 0 {
+                print("Nothing in portfolio")
+                TotalLabel.text = "$0.00"
+                ChangeLabel.text = "$0.00"
+            }
+            else {
+                for a in 0...portfolio.count - 1 {
+                    let obj = portfolio[a]
+                    symbolText = obj["ticker"] as! String
+                    tickers.append(symbolText)
+                }
             }
         }
         else {
             print("error getting portfolio")
         }
-        for b in 1...tickers.count - 1{
-            symbolText = tickers[b]
-            let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbolText + "&apikey=" + API_KEY)!
-            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-            let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                 // This will run when the network request returns
-                 if let error = error {
-                        print(error.localizedDescription)
-                 } else if let data = data {
-                        let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                        print(dataDictionary)
-                    self.stockResults = dataDictionary["Global Quote"] as! [String : Any]
-                    self.allStockPrices.append(self.stockResults["05. price"] as! String)
-                    self.allStockChanges.append(self.stockResults["09. change"] as! String)
-                    
-                    let change = self.stockResults["09. change"] as! String
-                    let c = Double(change)
-                    self.totalChange += c!
-                    //find individual value of each stock
-                    let price = self.stockResults["05. price"]! as! String
-                    let p = Double(price)
-                    self.totalValue += p!
-                 }
+        if count != 0 {
+            for b in 1...tickers.count - 1{
+                symbolText = tickers[b]
+                let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbolText + "&apikey=" + API_KEY)!
+                let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+                let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+                let task = session.dataTask(with: request) { (data, response, error) in
+                     // This will run when the network request returns
+                     if let error = error {
+                            print(error.localizedDescription)
+                     } else if let data = data {
+                            let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                            print(dataDictionary)
+                        self.stockResults = dataDictionary["Global Quote"] as! [String : Any]
+                        self.allStockPrices.append(self.stockResults["05. price"] as! String)
+                        self.allStockChanges.append(self.stockResults["09. change"] as! String)
+                        
+                        let change = self.stockResults["09. change"] as! String
+                        let c = Double(change)
+                        self.totalChange += c!
+                        //find individual value of each stock
+                        let price = self.stockResults["05. price"]! as! String
+                        let p = Double(price)
+                        self.totalValue += p!
+                     }
+                }
+                task.resume()
             }
-            task.resume()
         }
         group.leave()
         
@@ -153,7 +162,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         group.notify(queue: .main) {
             //get price
-            self.group.wait()
             let p = Double(self.allStockPrices[indexPath.row + 1])
             cell.PriceLabel.text = String(format: "$%.2f", p!)
             let change = self.stockResults["09. change"] as! String
