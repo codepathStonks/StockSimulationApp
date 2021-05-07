@@ -23,6 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var totalChange = 0.0
     var count = 0
     var totalValue = 0.0
+    var onOff = false
     
     var allStockPrices = [""]
     var allStockChanges = [""]
@@ -48,7 +49,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         HomeBalanceLabel.text?.append(String(balance))
         
         
-        
+        group.enter()
         var symbolText = ""
         var tickers = [""]
         
@@ -65,8 +66,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             print("error getting portfolio")
         }
-        
-        group.enter()
         for b in 1...tickers.count - 1{
             symbolText = tickers[b]
             let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbolText + "&apikey=" + API_KEY)!
@@ -154,6 +153,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         group.notify(queue: .main) {
             //get price
+            self.group.wait()
             let p = Double(self.allStockPrices[indexPath.row + 1])
             cell.PriceLabel.text = String(format: "$%.2f", p!)
             let change = self.stockResults["09. change"] as! String
