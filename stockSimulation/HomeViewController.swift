@@ -122,6 +122,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     cell.PriceLabel.textColor = UIColor.green
                 }
                 
+                let group = DispatchGroup()
+                group.enter()
                 self.totalChange += c!
                 print(self.totalChange)
                 //find individual value of each stock
@@ -129,7 +131,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(self.totalValue)
                 print(indexPath.row)
                 print(self.count)
-                
+                group.leave()
                 
                 if indexPath.row == self.count - 1{
                     self.changeChangeLabel()
