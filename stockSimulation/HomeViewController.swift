@@ -162,19 +162,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         group.notify(queue: .main) {
             //get price
-            let p = Double(self.allStockPrices[indexPath.row + 1])
-            cell.PriceLabel.text = String(format: "$%.2f", p!)
-            let change = self.stockResults["09. change"] as! String
-            //get change
-            let c = Double(self.allStockChanges[indexPath.row + 1])
-            if c! < 0 {
-                cell.PriceLabel.textColor = UIColor.red
+            if self.allStockPrices.count > self.count {
+                let p = Double(self.allStockPrices[indexPath.row + 1])
+                cell.PriceLabel.text = String(format: "$%.2f", p!)
+                let change = self.stockResults["09. change"] as! String
+                //get change
+                let c = Double(self.allStockChanges[indexPath.row + 1])
+                if c! < 0 {
+                    cell.PriceLabel.textColor = UIColor.red
+                }
+                else {
+                    cell.PriceLabel.textColor = UIColor.green
+                }
+                self.changeTotalLabel()
+                self.changeChangeLabel()
             }
-            else {
-                cell.PriceLabel.textColor = UIColor.green
-            }
-            self.changeTotalLabel()
-            self.changeChangeLabel()
         }
         
 //        let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbolText + "&apikey=" + API_KEY)!
