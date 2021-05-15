@@ -159,3 +159,5 @@ Week 1:
 ![](week1_demo.gif)
 
 ![](week2_demo.gif)
+
+![](week3_demo.gif)
