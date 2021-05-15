@@ -8,6 +8,7 @@ target 'stockSimulation' do
   # Pods for stockSimulation
   pod 'AlamofireImage'
   pod 'Parse'
+  pod 'Charts'
 
   target 'stockSimulationTests' do
     inherit! :search_paths

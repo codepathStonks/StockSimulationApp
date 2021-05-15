@@ -7,8 +7,9 @@
 
 import UIKit
 import Parse
+import Charts
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChartViewDelegate {
 
     @IBOutlet weak var TotalLabel: UILabel!
     @IBOutlet weak var ChangeLabel: UILabel!
@@ -18,6 +19,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var home_tableView: UITableView!
     
     let API_KEY = "OVULR05CBMMN9THU"
+    let API_KEY2 = "97F5BWWWRJDS6L1C"
     let curr_user = PFUser.current()
     var stockResults = [String:Any]()
     var totalChange = 0.0
@@ -27,15 +29,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var allStockPrices = [""]
     var allStockChanges = [""]
+    var symbolText = ""
+    var tickers = [""]
     let group = DispatchGroup()
+    
+    var balance = 0.0
+    
+    //chart
+    var lineChart = LineChartView()
+    var dataBuffer = [String:Any]()
+    var dataBuffer2 = [String:Any]()
+    var dataBuffer3 = [String:Any]()
+    var oneStockData = [""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         home_tableView.dataSource = self
         home_tableView.delegate = self
+        lineChart.delegate = self
+        
+        TotalLabel.text = ""
+        ChangeLabel.text = ""
         
         var us3r: PFObject!
-        var balance = 0.0
         let q = PFQuery(className: "users")
         q.whereKey("user", equalTo: curr_user!)
         if let object = try? q.getFirstObject()
@@ -49,8 +65,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         HomeBalanceLabel.text?.append(String(balance))
         
         group.enter()
-        var symbolText = ""
-        var tickers = [""]
         
         let q2 = PFQuery(className: "Portfolio")
         q2.whereKey("user", equalTo: curr_user!)
@@ -97,7 +111,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         let price = self.stockResults["05. price"]! as! String
                         let p = Double(price)
                         self.totalValue += p!
+                        self.home_tableView.reloadData()
                      }
+                }
+                if b == tickers.count - 1 {
+                    self.home_tableView.reloadData()
+                    getChartData()
                 }
                 task.resume()
             }
@@ -160,13 +179,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("error getting portfolio")
         }
         
-        group.notify(queue: .main) {
+        //group.notify(queue: .main) {
             //get price
             if self.allStockPrices.count > self.count {
                 let p = Double(self.allStockPrices[indexPath.row + 1])
                 cell.PriceLabel.text = String(format: "$%.2f", p!)
-                let change = self.stockResults["09. change"] as! String
-                //get change
                 let c = Double(self.allStockChanges[indexPath.row + 1])
                 if c! < 0 {
                     cell.PriceLabel.textColor = UIColor.red
@@ -176,61 +193,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 self.changeTotalLabel()
                 self.changeChangeLabel()
+                
+                self.viewDidLayoutSubviews()
             }
-        }
-        
-//        let url = URL(string: "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbolText + "&apikey=" + API_KEY)!
-//        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-//        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-//        let task = session.dataTask(with: request) { (data, response, error) in
-//             // This will run when the network request returns
-//             if let error = error {
-//                    print(error.localizedDescription)
-//             } else if let data = data {
-//                    let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-//                    print(dataDictionary)
-//                self.stockResults = dataDictionary["Global Quote"] as! [String : Any]
-//                print(self.stockResults)
-//                print("-----------------")
-//
-//                //set price label = current price of stock
-//                let price = self.stockResults["05. price"]! as! String
-//                let p = Double(price)
-//                cell.PriceLabel.text = String(format: "$%.2f", p!)
-//
-//                //find individual changes of each stock
-//                let change = self.stockResults["09. change"] as! String
-//                let c = Double(change)
-//                if c! < 0 {
-//                    cell.PriceLabel.textColor = UIColor.red
-//                }
-//                else {
-//                    cell.PriceLabel.textColor = UIColor.green
-//                }
-//
-//                let group = DispatchGroup()
-//                group.enter()
-//                self.totalChange += c!
-//                print(self.totalChange)
-//                //find individual value of each stock
-//                self.totalValue += p!
-//                print(self.totalValue)
-//                print(indexPath.row)
-//                print(self.count)
-//                group.leave()
-//
-//                if indexPath.row == self.count - 1{
-//                    self.changeChangeLabel()
-//                    self.changeTotalLabel()
-//                    print(self.totalChange)
-//                    print(self.totalValue)
-//                }
-//
-//
-//             }
-//        }
-//        task.resume()
-        
         return cell
     }
 
@@ -245,7 +210,151 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func changeTotalLabel() {
         TotalLabel.text = String(format: "$%.2f", self.totalValue)
+        //addFinal()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        lineChart.frame = CGRect(x: 0, y: 140, width: self.view.frame.width, height: 225)
+        view.addSubview(lineChart)
+    }
+    
+    func updateChart() {
+        print(oneStockData)
+        if oneStockData.count > 1 {
+            var entries = [ChartDataEntry]()
+            for b in 1...oneStockData.count - 1 {
+                entries.append(ChartDataEntry(x: Double(b), y: Double(oneStockData[b])! + balance))
+            }
+            let set = LineChartDataSet(entries: entries)
+            let data = LineChartData(dataSet: set)
+            lineChart.data = data
+            
+            lineChart.xAxis.labelPosition = XAxis.LabelPosition.bottom
+        }
+    }
+    
+    func getChartData() {
+        //for b in 1...tickers.count - 1{
+            //symbolText = tickers[b]
+            symbolText = tickers[1]
+            let url = URL(string: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + symbolText + "&interval=5min&apikey=" + API_KEY2)!
+            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+            let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                 // This will run when the network request returns
+                 if let error = error {
+                        print(error.localizedDescription)
+                 } else if let data = data {
+                        let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                        //print(dataDictionary)
+                    self.dataBuffer = dataDictionary["Time Series (5min)"] as! [String : Any]
+                    
+                    //get last refreshed time and record hour and min for some math
+                    self.dataBuffer3 = dataDictionary["Meta Data"] as! [String : Any]
+                    let fullDate = self.dataBuffer3["3. Last Refreshed"] as! String
+                    print(fullDate)
+                    let datePrefix = fullDate.prefix(11)
+                    print(datePrefix)
+                    let fullTime = fullDate.suffix(8)
+                    print(fullTime)
+                    let hourMin = fullTime.prefix(5)
+                    print(hourMin)
+                    let hour = hourMin.prefix(2)
+                    print(hour)
+                    var hourInt = Int(hour)!
+                    let min = hourMin.suffix(2)
+                    print(min)
+                    var minInt = Int(min)!
+                    
+                    if hourInt > 16 {
+                        hourInt = 16
+                        minInt = 0
+                    }
+                    
+    //                //reconstruction of date using modifiable parts
+    //                var newDate = ""
+    //                if minInt == 0 {
+    //                    newDate = datePrefix + String(hourInt) + ":00:00"
+    //                }
+    //                else {
+    //                    newDate = datePrefix + String(hourInt) + ":" + String(minInt) + ":00"
+    //                }
+    //                print(newDate)
+                    
+                    //non-Hardcoded retrieval of data
+                    for i in 0...9 {
+                        var newDate = ""
+                        if minInt == 0 {
+                            newDate = datePrefix + String(hourInt) + ":00:00"
+                        }
+                        else {
+                            newDate = datePrefix + String(hourInt) + ":" + String(minInt) + ":00"
+                        }
+                        print(newDate)
+                        self.dataBuffer2 = self.dataBuffer[newDate] as! [String : Any]
+                        self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+                        
+                        
+                        //math for calculating date
+                        if minInt == 0 {
+                            minInt = 55
+                            if hourInt == 1 {
+                                hourInt = 12
+                            }
+                            else {
+                                hourInt -= 1
+                            }
+                        }
+                        else {
+                            minInt -= 5
+                        }
+                        print(minInt)
+                        print(hourInt)
+                    }
+                    
+    //                //hardcoded retrieval of data
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 16:00:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:55:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:50:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:45:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:40:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:35:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:30:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:25:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:20:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:15:00"] as! [String : Any]
+    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+    //                print(self.oneStockData)
+                    self.updateChart()
+                 }
+            }
+            task.resume()
+        }
+    //}
+    
+    
+//    var Once = true
+//    func addFinal() {
+//        if Once {
+//            Once = false
+//            let countT = (TotalLabel.text!.count - 1)
+//            let final = String((TotalLabel.text?.suffix(countT))!)
+//            let finalDouble = Double(final)! - balance
+//            oneStockData.append(String(finalDouble))
+//            updateChart()
+//        }
+//    }
 }
 
 
