@@ -26,10 +26,10 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 
 * [x] User can login
 * [x] User can register for new account
-* User can view portfolio overview
+* [x] User can view portfolio overview
 * User can search
-* User can view stock details
-* User can view stock's performance over time 
+* [x] User can view stock details
+* [x] User can view stock's performance over time 
 * [x] User can view profile/settings
 * User can use fake currency for buying/selling stocks
 
