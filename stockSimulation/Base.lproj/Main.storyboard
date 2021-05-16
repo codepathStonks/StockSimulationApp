@@ -388,6 +388,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Password Reset"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLs-aF-fdZ">
+                                <rect key="frame" x="146" y="334" width="122" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="Guides"/>
+                                <connections>
+                                    <segue destination="5jp-EC-eff" kind="presentation" id="SIg-8a-y8F"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="paW-TD-KuB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -395,6 +404,7 @@
                     <navigationItem key="navigationItem" id="Sjs-zk-W4z"/>
                     <connections>
                         <outlet property="BalanceLabel" destination="qNS-Rz-BP9" id="iXK-LY-R8N"/>
+                        <outlet property="GuideButton" destination="rLs-aF-fdZ" id="r8j-oG-cey"/>
                         <outlet property="LabelUsernameLabel" destination="Ui2-Em-6LO" id="aYK-fQ-x5f"/>
                         <outlet property="UsernameLabel" destination="AOH-gN-sIh" id="TIc-kt-key"/>
                         <outlet property="WalletImage" destination="Ub7-j6-OE6" id="3A8-Yi-B29"/>
@@ -403,6 +413,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5fh-rG-vDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2779.7101449275365" y="983.70535714285711"/>
+        </scene>
+        <!--Guide View Controller-->
+        <scene sceneID="2EY-db-fza">
+            <objects>
+                <viewController storyboardIdentifier="Guide" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5jp-EC-eff" customClass="GuideViewController" customModule="stockSimulation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HGB-qf-HeY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIc-WQ-wUf">
+                                <rect key="frame" x="67" y="106" width="222" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Beginner's Guide"/>
+                                <connections>
+                                    <action selector="onGuide:" destination="5jp-EC-eff" eventType="touchUpInside" id="ke6-kP-rNX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-dp-8kv">
+                                <rect key="frame" x="144" y="225" width="199" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Intro to Options"/>
+                                <connections>
+                                    <action selector="onOption:" destination="5jp-EC-eff" eventType="touchUpInside" id="r2H-wN-cE5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ee4-rF-6pw">
+                                <rect key="frame" x="67" y="337" width="185" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="30"/>
+                                <state key="normal" title="Intro to Crypto"/>
+                                <connections>
+                                    <action selector="onCrypto:" destination="5jp-EC-eff" eventType="touchUpInside" id="TON-fZ-sSw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h06-EK-yHu">
+                                <rect key="frame" x="147" y="460" width="196" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="General Advice"/>
+                                <connections>
+                                    <action selector="onAdvice:" destination="5jp-EC-eff" eventType="touchUpInside" id="1XV-i2-v7g"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0TG-v7-kad"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="advice" destination="h06-EK-yHu" id="yo4-YU-55X"/>
+                        <outlet property="beginnerGuide" destination="vIc-WQ-wUf" id="BqB-Dq-Va9"/>
+                        <outlet property="crypto" destination="Ee4-rF-6pw" id="xPb-1Z-Q76"/>
+                        <outlet property="options" destination="xpL-dp-8kv" id="CFn-Xe-0cW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EyT-iX-n57" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2780" y="1706"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jYi-7D-8jp">

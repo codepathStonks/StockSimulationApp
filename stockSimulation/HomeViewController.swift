@@ -210,7 +210,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func changeTotalLabel() {
         TotalLabel.text = String(format: "$%.2f", self.totalValue)
-        //addFinal()
     }
     
     override func viewDidLayoutSubviews() {
@@ -236,9 +235,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getChartData() {
-        //for b in 1...tickers.count - 1{
-            //symbolText = tickers[b]
-            symbolText = tickers[1]
+        for b in 1...tickers.count - 1{
+            symbolText = tickers[b]
+            //symbolText = tickers[1]
             let url = URL(string: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + symbolText + "&interval=5min&apikey=" + API_KEY2)!
             let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
             let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -248,7 +247,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         print(error.localizedDescription)
                  } else if let data = data {
                         let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                        //print(dataDictionary)
+                        print(dataDictionary)
                     self.dataBuffer = dataDictionary["Time Series (5min)"] as! [String : Any]
                     
                     //get last refreshed time and record hour and min for some math
@@ -294,7 +293,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                         print(newDate)
                         self.dataBuffer2 = self.dataBuffer[newDate] as! [String : Any]
-                        self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+                        
+                        if b == 1 {
+                            self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+                        }
+                        else {
+                            print(b)
+                            var tempDouble = Double(self.oneStockData[1 + i])
+                            let tempString = self.dataBuffer2["4. close"] as! String
+                            tempDouble! += Double(tempString)!
+                            self.oneStockData[1 + i] = (String(tempDouble!))
+                        }
                         
                         
                         //math for calculating date
@@ -341,20 +350,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             task.resume()
         }
-    //}
+    }
     
     
-//    var Once = true
-//    func addFinal() {
-//        if Once {
-//            Once = false
-//            let countT = (TotalLabel.text!.count - 1)
-//            let final = String((TotalLabel.text?.suffix(countT))!)
-//            let finalDouble = Double(final)! - balance
-//            oneStockData.append(String(finalDouble))
-//            updateChart()
-//        }
-//    }
+    var Once = true
+    var finalDataPt = ""
+    func addFinal() {
+        if Once {
+            Once = false
+            let countT = (TotalLabel.text!.count - 1)
+            let final = String((TotalLabel.text?.suffix(countT))!)
+            let finalDouble = Double(final)! - balance
+            finalDataPt = String(finalDouble)
+            if oneStockData.count > 1 {
+                oneStockData.append(finalDataPt)
+            }
+            updateChart()
+        }
+    }
 }
 
 
