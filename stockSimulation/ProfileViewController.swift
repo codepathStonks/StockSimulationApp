@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var BalanceLabel: UILabel!
     @IBOutlet weak var UsernameLabel: UILabel!
     @IBOutlet weak var WalletImage: UIImageView!
+    @IBOutlet weak var GuideButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,8 +46,6 @@ class ProfileViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    
-
     /*
     // MARK: - Navigation
 
