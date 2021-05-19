@@ -15,6 +15,7 @@
 		15896DA426268815004D89A3 /* stockSimulationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15896DA326268815004D89A3 /* stockSimulationTests.swift */; };
 		15896DAF26268815004D89A3 /* stockSimulationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15896DAE26268815004D89A3 /* stockSimulationUITests.swift */; };
 		15B19098264B5E5F00A31435 /* StockSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B19097264B5E5F00A31435 /* StockSearch.swift */; };
+		15B1909A2654C60C00A31435 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B190992654C60C00A31435 /* SearchTableViewCell.swift */; };
 		15BCD3F926268FB1001F7DF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BCD3F826268FB1001F7DF3 /* LoginViewController.swift */; };
 		15BCD40626268FD3001F7DF3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BCD40526268FD3001F7DF3 /* HomeViewController.swift */; };
 		15BCD40B2627479A001F7DF3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BCD40A2627479A001F7DF3 /* SearchViewController.swift */; };
@@ -60,6 +61,7 @@
 		15896DAE26268815004D89A3 /* stockSimulationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stockSimulationUITests.swift; sourceTree = "<group>"; };
 		15896DB026268815004D89A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15B19097264B5E5F00A31435 /* StockSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearch.swift; sourceTree = "<group>"; };
+		15B190992654C60C00A31435 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		15BCD3F826268FB1001F7DF3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		15BCD40526268FD3001F7DF3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		15BCD40A2627479A001F7DF3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				49D5EDBB26336A1E00E2CAAF /* homeCell.swift */,
 				15B19097264B5E5F00A31435 /* StockSearch.swift */,
 				490579DD2651A9DD00AC5B54 /* GuideViewController.swift */,
+				15B190992654C60C00A31435 /* SearchTableViewCell.swift */,
 			);
 			path = stockSimulation;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				490579DE2651A9DD00AC5B54 /* GuideViewController.swift in Sources */,
 				308161BB263D9B9E006ED439 /* BuyingViewController.swift in Sources */,
 				15896D8F26268814004D89A3 /* SceneDelegate.swift in Sources */,
+				15B1909A2654C60C00A31435 /* SearchTableViewCell.swift in Sources */,
 				15B19098264B5E5F00A31435 /* StockSearch.swift in Sources */,
 				15BCD40626268FD3001F7DF3 /* HomeViewController.swift in Sources */,
 			);

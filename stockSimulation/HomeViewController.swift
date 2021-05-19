@@ -43,6 +43,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var oneStockData = [""]
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         home_tableView.dataSource = self
         home_tableView.delegate = self

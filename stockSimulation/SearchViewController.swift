@@ -7,30 +7,80 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-    
-    let API_KEY = "OVULR05CBMMN9THU"
-    
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+        
     var stockResults = [[String:Any]]()
+
+    let symbolText = "Apple"
+
+    func stockSearch(symbolText: String) {
+        
+        let url = URL(string: "https://ticker-2e1ica8b9.now.sh//keyword/" + symbolText)!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        let task = session.dataTask(with: request) { (data, response, error) in
+             // This will run when the network request returns
+             if let error = error {
+                    print(error.localizedDescription)
+             } else if let data = data {
+                let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
+                
+                print("Printing dataDictionary")
+                print(dataDictionary)
+                
+                self.stockResults = dataDictionary as! [[String:Any]]
+                
+                self.tableView.reloadData()
+                
+             }
+        }
+        
+        
+        task.resume()
+
+    }
     
-    let symbolText = "TSLA"
+    @IBOutlet weak var tickerSearch: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stockInformation(ticker: symbolText)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
         stockSearch(symbolText: "Tesla")
-        // Do any additional setup after loading the view.
-    }
+        
+        tickerSearch.delegate = self
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        print(stockResults.count)
+        return stockResults.count
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell") as! SearchTableViewCell
+        
+        let company = stockResults[indexPath.row]
+        let companyName = company["name"] as! String
+        let companyTicker = company["symbol"] as! String
+        
+        cell.companyName.text = companyName
+        cell.companyTicker.text = companyTicker
+        
+        return cell
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        stockSearch(symbolText: searchBar.text!)
+    }
 
 }
