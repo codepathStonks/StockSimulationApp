@@ -182,7 +182,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //group.notify(queue: .main) {
             //get price
-            if self.allStockPrices.count > self.count {
+        if self.allStockPrices.count > self.count && self.allStockPrices.count > 1{
                 let p = Double(self.allStockPrices[indexPath.row + 1])
                 cell.PriceLabel.text = String(format: "$%.2f", p!)
                 let c = Double(self.allStockChanges[indexPath.row + 1])
@@ -232,6 +232,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             lineChart.data = data
             
             lineChart.xAxis.labelPosition = XAxis.LabelPosition.bottom
+            lineChart.xAxis.drawLabelsEnabled = false
+            lineChart.xAxis.drawGridLinesEnabled = false
+            lineChart.leftAxis.drawGridLinesEnabled = false
         }
     }
     
@@ -273,16 +276,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         minInt = 0
                     }
                     
-    //                //reconstruction of date using modifiable parts
-    //                var newDate = ""
-    //                if minInt == 0 {
-    //                    newDate = datePrefix + String(hourInt) + ":00:00"
-    //                }
-    //                else {
-    //                    newDate = datePrefix + String(hourInt) + ":" + String(minInt) + ":00"
-    //                }
-    //                print(newDate)
-                    
                     //non-Hardcoded retrieval of data
                     for i in 0...9 {
                         var newDate = ""
@@ -323,29 +316,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         print(minInt)
                         print(hourInt)
                     }
-                    
-    //                //hardcoded retrieval of data
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 16:00:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:55:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:50:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:45:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:40:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:35:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:30:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:25:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:20:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                self.dataBuffer2 = self.dataBuffer["2021-05-13 15:15:00"] as! [String : Any]
-    //                self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
-    //                print(self.oneStockData)
                     self.updateChart()
                  }
             }
