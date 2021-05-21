@@ -27,11 +27,11 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 * [x] User can login
 * [x] User can register for new account
 * [x] User can view portfolio overview
-* User can search
+* [x] User can search
 * [x] User can view stock details
 * [x] User can view stock's performance over time 
 * [x] User can view profile/settings
-* User can use fake currency for buying/selling stocks
+* [x] User can use fake currency for buying/selling stocks
 
 **Optional Nice-to-have Stories**
 * User can view others via the social tab
@@ -40,7 +40,7 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 * User can follow others
 * User can unfollow others
 * User can trade Crypto Currencies
-* User has access to Learning Resources
+* [x] User has access to Learning Resources
 * User can trade Options
 * User can change profile image/username/password
 * User receives push notifications for stock performance
@@ -154,10 +154,10 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 
 ## Demos
 
-Week 1:
-
 ![](week1_demo.gif)
 
 ![](week2_demo.gif)
 
 ![](week3_demo.gif)
+
+![](week4_demo.gif)
