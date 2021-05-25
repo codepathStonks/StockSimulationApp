@@ -12,6 +12,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var stockResults = [[String:Any]]()
 
     let symbolText = "Apple"
+    
+    var stockData = [String:Any]()
 
     func stockSearch(symbolText: String) {
         
@@ -24,9 +26,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     print(error.localizedDescription)
              } else if let data = data {
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
-                
-                print("Printing dataDictionary")
-                print(dataDictionary)
                 
                 self.stockResults = dataDictionary as! [[String:Any]]
                 
@@ -49,7 +48,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         
-        stockSearch(symbolText: "Tesla")
+        stockSearch(symbolText: "A")
         
         tickerSearch.delegate = self
 
@@ -57,7 +56,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        print(stockResults.count)
         return stockResults.count
         
     }
@@ -81,6 +79,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         stockSearch(symbolText: searchBar.text!)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let stockTicker = stockResults[indexPath.row]
+        let ticker = stockTicker["symbol"] as! String
+        
+        let detailsViewController = segue.destination as! StockDetailsViewController
+        
+        
+        
+        detailsViewController.ticker = ticker
+        detailsViewController.stockName = stockTicker["name"] as! String
+        
     }
 
 }

@@ -371,6 +371,7 @@
                                         <connections>
                                             <outlet property="companyName" destination="WbW-MR-5WQ" id="cSg-VX-7Jg"/>
                                             <outlet property="companyTicker" destination="nIf-df-ZIJ" id="5th-nm-08B"/>
+                                            <segue destination="zet-ih-z0k" kind="show" id="kT5-bp-gDq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -596,6 +597,9 @@
             <point key="canvasLocation" x="2780" y="117"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="kT5-bp-gDq"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="home_icon" width="30" height="30"/>
         <image name="search_icon" width="30" height="30"/>
