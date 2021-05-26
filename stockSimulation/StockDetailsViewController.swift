@@ -28,13 +28,14 @@ class StockDetailsViewController: UIViewController {
                     print(error.localizedDescription)
              } else if let data = data {
                     let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    
+
                 let dataQuote = dataDictionary["Global Quote"] as! [String:Any]
                 let dataPrice = dataQuote["05. price"] as! String
                 priceForStock = dataPrice
-                
+
                 TickerLabel.text = stockName
                 CostLabel.text = "$" + priceForStock
+                print(dataDictionary)
              }
         }
         task.resume()
