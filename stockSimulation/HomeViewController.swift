@@ -338,8 +338,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             updateChart()
         }
+        
+        
     }
-}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+//        print("loading details")
+//        let cell = sender as! UITableViewCell
+//        let indexPath = home_tableView.indexPath(for: cell)!
+//
+//        let curr_user = PFUser.current()
+//        let q = PFQuery(className: "Portfolio")
+//        q.whereKey("user", equalTo: curr_user!)
+//        //make an if statement to see if its populated
+//        if let portfolio = try? q.findObjects()
+//        {
+//            let obj = portfolio[indexPath.row]
+//        }
+//        else {
+//            print("error getting portfolio")
+//        }
+//        let detailsViewController = segue.destination as! StockDetailsViewController
+        if(tickers.count>1){
+            let cell = sender as! UITableViewCell
+            let indexPath = home_tableView.indexPath(for: cell)!
+            let stockTicker = tickers[indexPath.row + 1]
+ 
+            let detailsViewController = segue.destination as! StockDetailsViewController
+            
+            detailsViewController.ticker = stockTicker
+            detailsViewController.stockName = stockTicker
+        }
+       
+        }
+    }
+
 
 
 
