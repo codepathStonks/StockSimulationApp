@@ -42,6 +42,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var dataBuffer3 = [String:Any]()
     var oneStockData = [""]
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -371,6 +373,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             detailsViewController.ticker = stockTicker
             detailsViewController.stockName = stockTicker
+            detailsViewController.balance = balance
+            
         }
        
         }

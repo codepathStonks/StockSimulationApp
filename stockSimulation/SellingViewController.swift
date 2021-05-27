@@ -1,20 +1,17 @@
 //
-//  BuyingViewController.swift
+//  SellingViewController.swift
 //  stockSimulation
 //
-//  Created by Leyla Tuon on 5/1/21.
+//  Created by Leyla Tuon on 5/26/21.
 //
 
 import UIKit
 import Parse
 
-
-class BuyingViewController: UIViewController {
+class SellingViewController: UIViewController {
     @IBOutlet weak var TickerLabel: UILabel!
-    @IBOutlet weak var TickerImage: UIImageView!
     @IBOutlet weak var CostLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
-    
     @IBOutlet weak var QuantityField: UITextField!
     
     let curr_user = PFUser.current()
@@ -23,7 +20,6 @@ class BuyingViewController: UIViewController {
     var balance = 0.00
     var ticker = String()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +27,6 @@ class BuyingViewController: UIViewController {
         CostLabel.text = "$" + String(priceForStock)
         balanceLabel.text = "$" + String(balance)
     }
-    
     @IBAction func onTap(_ sender: Any) {
         view.endEditing(true)
     }
@@ -44,13 +39,13 @@ class BuyingViewController: UIViewController {
         }
     }
     
-    @IBAction func onConfirm(_ sender: Any) {
+    @IBAction func OnConfirm(_ sender: Any) {
+        
         let quantity = Double(QuantityField.text!) ?? 0
         let currPortfolio = PFObject(className: "Portfolio")
         
         let totalPrice = quantity * Double(priceForStock)
         
-        if(balance>=totalPrice){
             let q2 = PFQuery(className: "Portfolio")
             q2.whereKey("user", equalTo: curr_user!)
             q2.whereKey("ticker", equalTo: stockName)
@@ -58,39 +53,12 @@ class BuyingViewController: UIViewController {
             {
                 //create new object
                 let count = portfolio.count
-                if portfolio.count == 0 {
-                    print("Nothing in portfolio")
-                    currPortfolio["user"] = PFUser.current()!
-                    currPortfolio["ticker"] = ticker
-                    currPortfolio["quantity"] = quantity
-                    currPortfolio["price_bought_at"] = priceForStock
-                    currPortfolio["date_bought_at"] = Date()
-                let q = PFQuery(className: "users")
-                q.whereKey("user", equalTo: curr_user!)
-                if let object = try? q.findObjects()
-                {
-                    print("balance retrieved")
-                    var obj2 = object[0]
-                    var newBalance = obj2["balance"] as! Double
-                    newBalance -= totalPrice
-                    obj2["balance"] = newBalance
-                }
-                    
-                    currPortfolio.saveInBackground { (success, error) in
-                    if success {
-                        print("saved tester portfolio")
-                        
-                    }
-                    else {
-                        print ("error tester portfolio")
-                    }
-                    }
-                }
-                else {
+
                 //get first object
                     var obj = portfolio[0]
                     var qty = obj["quantity"] as! Int
-                    qty += 1
+                if(qty > 0){
+                    qty -= 1
                     obj["quantity"] = qty
                     obj.saveInBackground()
                     
@@ -101,34 +69,30 @@ class BuyingViewController: UIViewController {
                         print("balance retrieved")
                         var obj2 = object[0]
                         var newBalance = obj2["balance"] as! Double
-                        newBalance -= totalPrice
+                        newBalance += totalPrice
                         obj2["balance"] = newBalance
                         obj2.saveInBackground()
                     }
                 }
+                else{
+                    print("insufficient quantity")
+                }
+                
                 print(portfolio.count)
                 for object in portfolio{
                     print(object)
                 }
+                }
+            else{
+                print("find object failed")
+            }
+
                 
                 
                 _ = navigationController?.popViewController(animated: true)
-            }
-            else{
-                print("can't buy")
-            }
-            }
-            else {
-                print("error getting portfolio")
-            }
-            
-
- 
         
-   
     }
-
-
+    
     /*
     // MARK: - Navigation
 
