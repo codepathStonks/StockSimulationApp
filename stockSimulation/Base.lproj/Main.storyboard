@@ -214,7 +214,7 @@
                                     <color key="titleColor" systemColor="systemGreenColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="3Pp-CI-XcR" kind="show" id="tAW-3t-YL9"/>
+                                    <segue destination="3Pp-CI-XcR" kind="show" identifier="showBuying" id="tAW-3t-YL9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHl-d9-9f1">
@@ -224,7 +224,7 @@
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5Dd-wF-tSV" kind="show" id="bbc-Qs-Paw"/>
+                                    <segue destination="5Dd-wF-tSV" kind="show" identifier="showSelling" id="bbc-Qs-Paw"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nE0-wf-mfp">

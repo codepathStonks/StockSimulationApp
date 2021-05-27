@@ -46,7 +46,6 @@ class SellingViewController: UIViewController {
         
         let totalPrice = quantity * Double(priceForStock)
         
-        if(balance>=totalPrice){
             let q2 = PFQuery(className: "Portfolio")
             q2.whereKey("user", equalTo: curr_user!)
             q2.whereKey("ticker", equalTo: stockName)
@@ -58,6 +57,7 @@ class SellingViewController: UIViewController {
                 //get first object
                     var obj = portfolio[0]
                     var qty = obj["quantity"] as! Int
+                if(qty > 0){
                     qty -= 1
                     obj["quantity"] = qty
                     obj.saveInBackground()
@@ -73,22 +73,23 @@ class SellingViewController: UIViewController {
                         obj2["balance"] = newBalance
                         obj2.saveInBackground()
                     }
+                }
+                else{
+                    print("insufficient quantity")
+                }
+                
                 print(portfolio.count)
                 for object in portfolio{
                     print(object)
                 }
                 }
+            else{
+                print("find object failed")
+            }
 
                 
                 
                 _ = navigationController?.popViewController(animated: true)
-            }
-            else {
-                print("error getting portfolio")
-            }
-            
-
- 
         
     }
     

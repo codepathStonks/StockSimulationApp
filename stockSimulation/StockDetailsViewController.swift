@@ -71,20 +71,23 @@ class StockDetailsViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "showBuying"{
         let detailsViewController = segue.destination as! BuyingViewController
         
         detailsViewController.stockName = stockName
         detailsViewController.priceForStock = Double(priceForStock)!
         detailsViewController.balance = balance
         detailsViewController.ticker = ticker
+        }
         
-//        let sellingViewController = segue.destination as! SellingViewController
-//
-//        sellingViewController.stockName = stockName
-//        sellingViewController.priceForStock = Double(priceForStock)!
-//        sellingViewController.balance = balance
-//        sellingViewController.ticker = ticker
-    }
+        if segue.identifier == "showSelling"{
+        let sellingViewController = segue.destination as! SellingViewController
 
+        sellingViewController.stockName = stockName
+        sellingViewController.priceForStock = Double(priceForStock)!
+        sellingViewController.balance = balance
+        sellingViewController.ticker = ticker
+        
+    }
+    }
 }
