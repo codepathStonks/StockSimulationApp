@@ -12,9 +12,17 @@ class StockDetailsViewController: UIViewController {
     @IBOutlet weak var CostLabel: UILabel!
     @IBOutlet weak var TickerImage: UIImageView!
     
+    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet weak var lowLabel: UILabel!
+    @IBOutlet weak var highLabel: UILabel!
+    @IBOutlet weak var changeLabel: UILabel!
+    @IBOutlet weak var changePercentLabel: UILabel!
+
+    
     var ticker = String()
     var priceForStock = String()
     var stockName = String()
+    var balance = 0.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +43,20 @@ class StockDetailsViewController: UIViewController {
 
                 TickerLabel.text = stockName
                 CostLabel.text = "$" + priceForStock
+                balanceLabel.text = "$" + String(balance)
+                
+                let dataLow = dataQuote["04. low"] as! String
+                lowLabel.text = "$" + dataLow
+                
+                let dataHigh = dataQuote["03. high"] as! String
+                highLabel.text = "$" + dataHigh
+                
+                let dataChange = dataQuote["09. change"] as! String
+                changeLabel.text = "$" + dataChange
+                
+                let dataChangePercent = dataQuote["10. change percent"] as! String
+                changePercentLabel.text = dataChangePercent
+                
                 print(dataDictionary)
              }
         }
@@ -44,14 +66,25 @@ class StockDetailsViewController: UIViewController {
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        let detailsViewController = segue.destination as! BuyingViewController
+        
+        detailsViewController.stockName = stockName
+        detailsViewController.priceForStock = Double(priceForStock)!
+        detailsViewController.balance = balance
+        detailsViewController.ticker = ticker
+        
+//        let sellingViewController = segue.destination as! SellingViewController
+//
+//        sellingViewController.stockName = stockName
+//        sellingViewController.priceForStock = Double(priceForStock)!
+//        sellingViewController.balance = balance
+//        sellingViewController.ticker = ticker
     }
-    */
 
 }

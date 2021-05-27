@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Parse
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
         
@@ -14,6 +15,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     let symbolText = "Apple"
     
     var stockData = [String:Any]()
+    var balance = 0.00
 
     func stockSearch(symbolText: String) {
         
@@ -41,7 +43,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var tickerSearch: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
+    let curr_user = PFUser.current()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +54,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         stockSearch(symbolText: "A")
         
         tickerSearch.delegate = self
+        
+        var us3r: PFObject!
+        let q = PFQuery(className: "users")
+        q.whereKey("user", equalTo: curr_user!)
+        if let object = try? q.getFirstObject()
+        {
+            us3r = object
+            print("balance retrieved")
+            balance = us3r["balance"] as! Double
+        }
 
     }
     
@@ -94,6 +107,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         detailsViewController.ticker = ticker
         detailsViewController.stockName = stockTicker["name"] as! String
+        detailsViewController.balance = balance
+        print("prepared balance")
         
     }
 
