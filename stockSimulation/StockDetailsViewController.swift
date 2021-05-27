@@ -42,7 +42,9 @@ class StockDetailsViewController: UIViewController {
                 priceForStock = dataPrice
 
                 TickerLabel.text = stockName
-                CostLabel.text = "$" + priceForStock
+                //CostLabel.text = "$" + priceForStock
+                let price = Double(priceForStock)
+                CostLabel.text = String(format: "$%.2f", price!)
                 balanceLabel.text = "$" + String(balance)
                 
                 let dataLow = dataQuote["04. low"] as! String

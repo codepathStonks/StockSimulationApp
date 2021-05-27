@@ -28,7 +28,8 @@ class BuyingViewController: UIViewController {
         super.viewDidLoad()
 
         TickerLabel.text = stockName
-        CostLabel.text = "$" + String(priceForStock)
+        //CostLabel.text = "$" + String(priceForStock)
+        CostLabel.text = String(format: "$%.2f", priceForStock)
         balanceLabel.text = "$" + String(balance)
     }
     
@@ -38,9 +39,14 @@ class BuyingViewController: UIViewController {
     
     @IBAction func CalculatePrice(_ sender: Any) {
         let quantity = Double(QuantityField.text!) ?? 0
-        if(quantity>1)
+        if(quantity>0)
         {
-            CostLabel.text = "$" + String(quantity * priceForStock)
+            //CostLabel.text = "$" + String(quantity * priceForStock)
+            let buffer = quantity * priceForStock
+            CostLabel.text = String(format: "$%.2f", buffer)
+        }
+        else {
+            CostLabel.text = String(format: "$%.2f", priceForStock)
         }
     }
     
@@ -58,7 +64,7 @@ class BuyingViewController: UIViewController {
             {
                 //create new object
                 let count = portfolio.count
-                if portfolio.count == 0 {
+                if portfolio.count == 0  && quantity > 0{
                     print("Nothing in portfolio")
                     currPortfolio["user"] = PFUser.current()!
                     currPortfolio["ticker"] = ticker
@@ -90,7 +96,7 @@ class BuyingViewController: UIViewController {
                 //get first object
                     var obj = portfolio[0]
                     var qty = obj["quantity"] as! Int
-                    qty += 1
+                    qty += Int(quantity)
                     obj["quantity"] = qty
                     obj.saveInBackground()
                     
@@ -112,7 +118,8 @@ class BuyingViewController: UIViewController {
                 }
                 
                 
-                _ = navigationController?.popViewController(animated: true)
+                //_ = navigationController?.popViewController(animated: true)
+                _ = navigationController?.popToRootViewController(animated: true)
             }
             else{
                 print("can't buy")

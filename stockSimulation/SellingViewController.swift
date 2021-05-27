@@ -33,9 +33,14 @@ class SellingViewController: UIViewController {
     
     @IBAction func CalculatePrice(_ sender: Any) {
         let quantity = Double(QuantityField.text!) ?? 0
-        if(quantity>1)
+        if(quantity>0)
         {
-            CostLabel.text = "$" + String(quantity * priceForStock)
+            //CostLabel.text = "$" + String(quantity * priceForStock)
+            let buffer = quantity * priceForStock
+            CostLabel.text = String(format: "$%.2f", buffer)
+        }
+        else {
+            CostLabel.text = String(format: "$%.2f", priceForStock)
         }
     }
     
@@ -46,50 +51,51 @@ class SellingViewController: UIViewController {
         
         let totalPrice = quantity * Double(priceForStock)
         
-            let q2 = PFQuery(className: "Portfolio")
-            q2.whereKey("user", equalTo: curr_user!)
-            q2.whereKey("ticker", equalTo: stockName)
-            if let portfolio = try? q2.findObjects()
-            {
-                //create new object
-                let count = portfolio.count
+        let q2 = PFQuery(className: "Portfolio")
+        q2.whereKey("user", equalTo: curr_user!)
+        q2.whereKey("ticker", equalTo: stockName)
+        if let portfolio = try? q2.findObjects()
+        {
+            //create new object
+            let count = portfolio.count
 
-                //get first object
-                    var obj = portfolio[0]
-                    var qty = obj["quantity"] as! Int
-                if(qty > 0){
-                    qty -= 1
-                    obj["quantity"] = qty
-                    obj.saveInBackground()
-                    
-                    let q = PFQuery(className: "users")
-                    q.whereKey("user", equalTo: curr_user!)
-                    if let object = try? q.findObjects()
-                    {
-                        print("balance retrieved")
-                        var obj2 = object[0]
-                        var newBalance = obj2["balance"] as! Double
-                        newBalance += totalPrice
-                        obj2["balance"] = newBalance
-                        obj2.saveInBackground()
-                    }
-                }
-                else{
-                    print("insufficient quantity")
-                }
+            //get first object
+                var obj = portfolio[0]
+                var qty = obj["quantity"] as! Int
+            if(qty >= Int(quantity)){
+                qty -= Int(quantity)
+                obj["quantity"] = qty
+                obj.saveInBackground()
                 
-                print(portfolio.count)
-                for object in portfolio{
-                    print(object)
+                let q = PFQuery(className: "users")
+                q.whereKey("user", equalTo: curr_user!)
+                if let object = try? q.findObjects()
+                {
+                    print("balance retrieved")
+                    var obj2 = object[0]
+                    var newBalance = obj2["balance"] as! Double
+                    newBalance += totalPrice
+                    obj2["balance"] = newBalance
+                    obj2.saveInBackground()
                 }
-                }
-            else{
-                print("find object failed")
             }
+            else{
+                print("insufficient quantity")
+            }
+            
+            print(portfolio.count)
+            for object in portfolio{
+                print(object)
+            }
+        }
+        else{
+            print("find object failed")
+        }
 
                 
                 
-                _ = navigationController?.popViewController(animated: true)
+        //_ = navigationController?.popViewController(animated: true)
+        _ = navigationController?.popToRootViewController(animated: true)
         
     }
     

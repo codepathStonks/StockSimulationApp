@@ -31,6 +31,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var allStockChanges = [""]
     var symbolText = ""
     var tickers = [""]
+    var allQty = [0]
     let group = DispatchGroup()
     
     var balance = 0.0
@@ -50,10 +51,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         home_tableView.dataSource = self
         home_tableView.delegate = self
         lineChart.delegate = self
-        
+
         TotalLabel.text = ""
         ChangeLabel.text = ""
-        
+
         var us3r: PFObject!
         let q = PFQuery(className: "users")
         q.whereKey("user", equalTo: curr_user!)
@@ -64,11 +65,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             balance = us3r["balance"] as! Double
             self.totalValue = balance
         }
-        HomeBalanceLabel.text = "$"
-        HomeBalanceLabel.text?.append(String(balance))
-        
+//        HomeBalanceLabel.text = "$"
+//        HomeBalanceLabel.text?.append(String(balance))
+        HomeBalanceLabel.text = String(format: "$%.2f", balance)
+
         group.enter()
-        
+
         let q2 = PFQuery(className: "Portfolio")
         q2.whereKey("user", equalTo: curr_user!)
         if let portfolio = try? q2.findObjects()
@@ -84,6 +86,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let obj = portfolio[a]
                     symbolText = obj["ticker"] as! String
                     tickers.append(symbolText)
+                    let qty = obj["quantity"] as! Int
+                    allQty.append(qty)
                 }
             }
         }
@@ -106,14 +110,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.stockResults = dataDictionary["Global Quote"] as! [String : Any]
                         self.allStockPrices.append(self.stockResults["05. price"] as! String)
                         self.allStockChanges.append(self.stockResults["09. change"] as! String)
-                        
+
                         let change = self.stockResults["09. change"] as! String
                         let c = Double(change)
-                        self.totalChange += c!
+                        self.totalChange += c! * Double(self.allQty[b])
                         //find individual value of each stock
                         let price = self.stockResults["05. price"]! as! String
                         let p = Double(price)
-                        self.totalValue += p!
+                        self.totalValue += p! * Double(self.allQty[b])
                         self.home_tableView.reloadData()
                      }
                 }
@@ -127,6 +131,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         group.leave()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        var us3r: PFObject!
+        let q = PFQuery(className: "users")
+        q.whereKey("user", equalTo: curr_user!)
+        if let object = try? q.getFirstObject() {
+            us3r = object
+            print("balance reset")
+            balance = us3r["balance"] as! Double
+            HomeBalanceLabel.text = String(format: "$%.2f", balance)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -291,13 +307,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.dataBuffer2 = self.dataBuffer[newDate] as! [String : Any]
                         
                         if b == 1 {
-                            self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
+                            //factor in qty
+                            let tempStr = self.dataBuffer2["4. close"] as! String
+                            var temp = Double(tempStr)
+                            temp = temp! * Double(self.allQty[b])
+                            self.oneStockData.append(String(temp!))
+                            
+                            //self.oneStockData.append(self.dataBuffer2["4. close"] as! String)
                         }
                         else {
                             print(b)
                             var tempDouble = Double(self.oneStockData[1 + i])
                             let tempString = self.dataBuffer2["4. close"] as! String
-                            tempDouble! += Double(tempString)!
+                            
+                            //factor in qty
+                            var temp = Double(tempString)
+                            temp = temp! * Double(self.allQty[b])
+                            tempDouble! += temp!
+                            
+                            //tempDouble! += Double(tempString)!
                             self.oneStockData[1 + i] = (String(tempDouble!))
                         }
                         
