@@ -161,3 +161,5 @@ Stock Simulator that allows users to trade with fake balance. Users can view the
 ![](week3_demo.gif)
 
 ![](week4_demo.gif)
+
+![](Demo.gif)
